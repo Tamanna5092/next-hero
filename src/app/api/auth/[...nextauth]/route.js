@@ -5,6 +5,7 @@ export const authOptions = {
   secret: process.env.NEXT_PUBLIC_AUTH_SECRET,
   session: {
     strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60,
   },
   providers: [
     CredentialsProvider({
@@ -32,12 +33,17 @@ export const authOptions = {
         const { name, email, password } = credentials;
         if (!credentials) {
           return null;
-        } else if (email) {
-          const currentUser = users.find(
-            (user) => user.email === email && user.name === name
-          );
         }
-        return null;
+        if (email) {
+          const currentUser = users.find((user) => user.email === email);
+          if (currentUser) {
+            if (currentUser.password === password) {
+              return { ...currentUser };
+            }
+          }
+        } else {
+          return null;
+        }
       },
     }),
   ],
@@ -51,18 +57,21 @@ const users = [
     name: "Julian Alvarez",
     email: "julianalvarez@gmail.com",
     password: "julian19",
+    type: "admin",
   },
   {
     id: 2,
     name: "Enzo Fernandez",
     email: "enzofernandez@gmail.com",
     password: "enzofernandez",
+    type: "user",
   },
   {
     id: 3,
     name: "Pedri",
     email: "pedri8@gmail.com",
     password: "pedri8",
+    type: "user",
   },
 ];
 
