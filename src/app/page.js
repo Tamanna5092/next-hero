@@ -15,7 +15,7 @@ export default async function Home () {
   const currentTime = await getTime();
   return (
     <main className="flex h-screen flex-col items-center justify-center">
-      <h1 className="text-3xl uppercase">Hello from next js</h1>
+      <h1 className="text-3xl uppercase">Hello from NEXT.js</h1>
       <div className={`${playfair.className} p-10`}>
         <h1 className="text-center text-4xl font-bold">Welcome To Home Page</h1>
         <p className="text-2xl text-center my-4"><span className="text-red-600 font-bold">Time</span>: {currentTime}</p>

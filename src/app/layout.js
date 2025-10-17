@@ -2,6 +2,7 @@ import { Geist, Geist_Mono, Roboto } from "next/font/google";
 import "./globals.css";
 import NavbarPage from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import AuthProvider from "./services/AuthProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,8 +14,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const roboto =  Roboto({
-  weight: ['400', '500', '700'],
+const roboto = Roboto({
+  weight: ["400", "500", "700"],
   subsets: ["latin"],
 });
 
@@ -29,14 +30,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        // className={roboto.className}
-      >
-        <NavbarPage></NavbarPage>
-        {children}
-        <Footer></Footer>
-      </body>
+      <AuthProvider>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          // className={roboto.className}
+        >
+          <NavbarPage></NavbarPage>
+          {children}
+          <Footer></Footer>
+        </body>
+      </AuthProvider>
     </html>
   );
 }

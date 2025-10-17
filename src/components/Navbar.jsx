@@ -1,4 +1,5 @@
 "use client";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
@@ -6,6 +7,8 @@ import React from "react";
 const NavbarPage = () => {
   const pathName = usePathname();
   const route = useRouter()
+  const session = useSession()
+  // console.log("session",session);
   const links = [
     {
       title: "Home",
@@ -42,7 +45,7 @@ const NavbarPage = () => {
   ];
 
   const handler = () => {
-    route.push('/login')
+    route.push('/api/auth/signin')
   }
 
   if(pathName.includes('dashboard')){
@@ -58,16 +61,20 @@ const NavbarPage = () => {
       </h4>
       <ul className="flex items-center space-x-4">
         {links.map((link) => (
-          <Link
+          <li key={link.path}>
+            <Link
             className={`${pathName === link.path && "text-red-400"}`}
             key={link.path}
             href={link.path}
           >
             {link.title}
           </Link>
+          </li>
         ))}
       </ul>
-      <button className="bg-white text-black p-4" onClick={handler}>Login</button>
+      {
+        !session.status === "authenticated"? <button className="bg-white text-black p-4" onClick={handler}>Login</button> : <button className="bg-white text-black p-4" onClick={handler}>Log Out</button>
+      }
     </nav>
   );
 };

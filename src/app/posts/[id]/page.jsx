@@ -1,6 +1,5 @@
 import React from "react";
 import { Playfair_Display } from "next/font/google";
-import { redirect } from "next/navigation";
 
 const playfair = Playfair_Display({
   weight: ["400", "700"],
