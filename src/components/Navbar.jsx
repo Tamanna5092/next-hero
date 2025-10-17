@@ -8,7 +8,7 @@ const NavbarPage = () => {
   const pathName = usePathname();
   const route = useRouter()
   const session = useSession()
-  // console.log("session",session);
+  console.log("session",session);
   const links = [
     {
       title: "Home",
@@ -73,7 +73,7 @@ const NavbarPage = () => {
         ))}
       </ul>
       {
-        !session.status === "authenticated"? <button className="bg-white text-black p-4" onClick={handler}>Login</button> : <button className="bg-white text-black p-4" onClick={handler}>Log Out</button>
+        session.status === "authenticated"? <button className="bg-white text-black p-4" onClick={handler}>Log out</button> : <button className="bg-white text-black p-4" onClick={handler}>Log in</button>
       }
     </nav>
   );
