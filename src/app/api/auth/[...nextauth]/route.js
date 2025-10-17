@@ -47,6 +47,20 @@ export const authOptions = {
       },
     }),
   ],
+
+  callbacks: {
+    async jwt({ token, account, user }) {
+      if (account) {
+        token.type = user.type;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.user.type = token.type
+      return session;
+    },
+  },
+
 };
 
 const handler = NextAuth(authOptions);
@@ -58,20 +72,23 @@ const users = [
     email: "julianalvarez@gmail.com",
     password: "julian19",
     type: "admin",
+    image: "https://i.ibb.co.com/mrKD35xc/alvarez.jpg",
   },
   {
     id: 2,
     name: "Enzo Fernandez",
     email: "enzofernandez@gmail.com",
     password: "enzofernandez",
-    type: "user",
+    type: "guest",
+    image: "https://i.pravatar.cc/150?img=2",
   },
   {
     id: 3,
     name: "Pedri",
     email: "pedri8@gmail.com",
     password: "pedri8",
-    type: "user",
+    type: "guest",
+    image: "https://i.pravatar.cc/150?img=3",
   },
 ];
 
