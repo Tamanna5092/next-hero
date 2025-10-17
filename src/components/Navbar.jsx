@@ -1,14 +1,15 @@
 "use client";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 const NavbarPage = () => {
   const pathName = usePathname();
-  const route = useRouter()
-  const session = useSession()
-  console.log("session",session);
+  const route = useRouter();
+  const session = useSession();
+  console.log("session", session);
   const links = [
     {
       title: "Home",
@@ -45,13 +46,11 @@ const NavbarPage = () => {
   ];
 
   const handler = () => {
-    route.push('/api/auth/signin')
-  }
+    route.push("/api/auth/signin");
+  };
 
-  if(pathName.includes('dashboard')){
-    return <div className="bg-green-400">
-      dashboard layout
-    </div>
+  if (pathName.includes("dashboard")) {
+    return <div className="bg-green-400">dashboard layout</div>;
   }
 
   return (
@@ -63,18 +62,41 @@ const NavbarPage = () => {
         {links.map((link) => (
           <li key={link.path}>
             <Link
-            className={`${pathName === link.path && "text-red-400"}`}
-            key={link.path}
-            href={link.path}
-          >
-            {link.title}
-          </Link>
+              className={`${pathName === link.path && "text-red-400"}`}
+              key={link.path}
+              href={link.path}
+            >
+              {link.title}
+            </Link>
           </li>
         ))}
       </ul>
-      {
-        session.status === "authenticated"? <button className="bg-white text-black p-4" onClick={handler}>Log out</button> : <button className="bg-white text-black p-4" onClick={handler}>Log in</button>
-      }
+      <div className="flex justify-center items-center gap-4">
+        <div className="flex flex-col justify-center items-center">
+          <p>{session?.data?.user?.name}</p>
+          <p>{session?.data?.user?.type}</p>
+        </div>
+        <div>
+          {session?.data?.user?.image && (
+            <Image
+              width={50}
+              height={100}
+              src={session?.data?.user?.image}
+              alt={session?.data?.user?.name}
+              className="rounded-full"
+            />
+          )}
+        </div>
+        {session.status === "authenticated" ? (
+          <button className="bg-white text-red-600 p-4" onClick={handler}>
+            Log out
+          </button>
+        ) : (
+          <button className="bg-white text-red-600 p-4" onClick={handler}>
+            Log in
+          </button>
+        )}
+      </div>
     </nav>
   );
 };
