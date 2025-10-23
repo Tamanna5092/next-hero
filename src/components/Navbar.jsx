@@ -1,5 +1,5 @@
 "use client";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -80,19 +80,22 @@ const NavbarPage = () => {
           {session?.data?.user?.image && (
             <Image
               width={50}
-              height={100}
+              height={80}
               src={session?.data?.user?.image}
               alt={session?.data?.user?.name}
               className="rounded-full"
             />
           )}
         </div>
+          <Link href={'/api/auth/signup'} className="bg-white text-red-600 p-4">
+            Sign Up
+          </Link>
         {session.status === "authenticated" ? (
-          <button className="bg-white text-red-600 p-4" onClick={handler}>
+          <button onClick={()=>signOut()} className="bg-white text-red-600 p-4 cursor-pointer">
             Log out
           </button>
         ) : (
-          <button className="bg-white text-red-600 p-4" onClick={handler}>
+          <button className="bg-white text-red-600 p-4 cursor-pointer" onClick={handler}>
             Log in
           </button>
         )}

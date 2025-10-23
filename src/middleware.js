@@ -1,12 +1,12 @@
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-// const user = true
-const cookie = "Next-hero-token";
-
 export const middleware = (request) => {
-  const cookies = request.cookies.get("token");
-  if (!cookies || cookies?.value !== cookie) {
-    return NextResponse.redirect(new URL("/login", request.url));
+
+  const token = cookies(request).get("next-auth.session-token")
+  console.log("Middleware token:", token);
+  if (!token) {
+    return NextResponse.redirect(new URL("/api/auth/signin", request.url));
   }
   return NextResponse.next();
 };
