@@ -6,8 +6,10 @@ const SignupPage = () => {
     const name = e.target.name.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log({name, email, password})
-    const newUser = { name, email, password };
+    const image = e.target.image.value;
+    const type = e.target.type.value
+    console.log({name, email, password, image, type})
+    const newUser = { name, email, password, image, type };
     const res = await fetch("http://localhost:3000/api/auth/signup/new-user", {
         method: "POST",
         body: JSON.stringify(newUser),
@@ -57,6 +59,28 @@ const SignupPage = () => {
               placeholder="Password"
               className="w-full px-4 py-3 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600"
             />
+          </div>
+          <div className="space-y-1">
+            <label htmlFor="image" className="block dark:text-gray-600">
+              Image URL
+            </label>
+            <input
+              type="text"
+              name="image"
+              id="image"
+              placeholder="Image url"
+              className="w-full px-4 py-3 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600"
+            />
+          </div>
+          <div className="space-y-1">
+            <label htmlFor="type" className="block dark:text-gray-600">
+              Type
+            </label>
+            <select name="type" id="type" className="w-full px-4 py-3 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600">
+              <option value="guest">Guest</option>
+              <option value="host">Host</option>
+              <option value="admin">Admin</option>
+            </select>
           </div>
           <button className="block w-full p-3 text-center rounded-sm bg-red-500 text-white hover:bg-red-700 dark:text-gray-50 dark:bg-violet-600">
             Sign Up
